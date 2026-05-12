@@ -5,6 +5,13 @@ SPDX-License-Identifier: Apache-2.0
 
 # Agent Skills for Coding Harnesses
 
+:::{note}
+The packaged `aiq-research` skill below remains the stable local-server helper.
+The broader preview catalog for setup, deployment, configuration, evaluation,
+tokenomics, troubleshooting, and OpenClaw lives under `skills/`. Start with
+`skills/README.md` when installing the focused `aiq-*` catalog.
+:::
+
 AI-Q includes a portable Agent Skill for coding harnesses that support skill-style instructions and helper scripts. The skill lets an assistant call a locally running AI-Q Blueprint server for routed `/chat` requests and async deep research job lifecycle operations.
 
 The packaged skill lives at:

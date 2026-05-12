@@ -1,0 +1,42 @@
+{
+  "id": "nvidia-aiq-skills",
+  "name": "NVIDIA AIQ Skills",
+  "description": "OpenClaw plugin that exposes the NVIDIA AI-Q Blueprint focused aiq-* skills.",
+  "version": "0.1.0",
+  "skills": [
+    "skills/aiq-setup-environment",
+    "skills/aiq-deploy-blueprint",
+    "skills/aiq-run-research",
+    "skills/aiq-manage-jobs",
+    "skills/aiq-configure-agents",
+    "skills/aiq-configure-tools",
+    "skills/aiq-manage-knowledge",
+    "skills/aiq-evaluate-benchmarks",
+    "skills/aiq-analyze-tokenomics",
+    "skills/aiq-troubleshoot-blueprint"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "aiqRepoRoot": {
+        "type": "string",
+        "description": "Optional absolute path to the NVIDIA AI-Q Blueprint repository checkout."
+      },
+      "aiqServerUrl": {
+        "type": "string",
+        "description": "Optional local AIQ server URL. Defaults to http://localhost:8000."
+      }
+    }
+  },
+  "uiHints": {
+    "aiqRepoRoot": {
+      "label": "AIQ repository root",
+      "placeholder": "/path/to/aiq"
+    },
+    "aiqServerUrl": {
+      "label": "AIQ server URL",
+      "placeholder": "http://localhost:8000"
+    }
+  }
+}

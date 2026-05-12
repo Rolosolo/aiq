@@ -35,6 +35,8 @@ env/
 *.swo
 *~
 .DS_Store
+~$*.docx
+~$*.xlsx
 
 # Environment Variables
 .env

@@ -60,6 +60,22 @@ jobs:
           . .venv/bin/activate
           SKIP=ruff-check,ruff-format,pytest,helm-lint pre-commit run --all-files
 
+  skills-compliance:
+    name: AIQ Skills Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Validate skills and OpenClaw plugin
+        run: |
+          python3 scripts/skill_compliance_check.py --skills-dir skills --openclaw-dir .openclaw --prefix aiq --strict
+
   test:
     name: Pytest and Coverage
     runs-on: ubuntu-latest

@@ -302,6 +302,19 @@ The `docs/notebooks/` directory contains a three-part series that walks through 
 | 1 | [Deep Researcher — Web Search](docs/notebooks/1_Deep_Researcher_Web_Search.ipynb) | Deep researcher in depth — Python API, `nat run`, and end-to-end evaluation against the DeepResearch Bench with `nat eval` | Notebook 0 completed; `NVIDIA_API_KEY`, `TAVILY_API_KEY`, `SERPER_API_KEY`; OpenAI or Gemini key for the judge model |
 | 2 | [Deep Researcher — Customization](docs/notebooks/2_Deep_Researcher_Customization.ipynb) | Extending the deep researcher — adding paper search, assigning different LLMs per agent role, editing prompts, and enabling the knowledge layer | Notebooks 0 and 1 completed; `NVIDIA_API_KEY`, `TAVILY_API_KEY`, `SERPER_API_KEY` |
 
+## AI Agent Skills Preview
+
+AI-Q includes a stable packaged Agent Skill at
+`.agents/skills/aiq-research/` for local-server routed chat and async deep
+research job lifecycle operations.
+
+A broader preview skills catalog now lives under [`skills/`](skills/). It adds
+focused `aiq-*` skills for setup, deployment, running research, async jobs,
+agent/tool configuration, knowledge layer, evaluation, tokenomics,
+troubleshooting, and OpenClaw packaging. Start with
+[`skills/README.md`](skills/README.md) for install guidance and ownership
+mapping.
+
 
 ## Evaluating the Workflow
 
