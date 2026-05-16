@@ -1,108 +1,109 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025-2026, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
-
-/**
- * Auth Error Page
- *
- * Displayed when authentication fails.
- * Redirects to home when REQUIRE_AUTH=false since auth is not needed.
- */
-
 'use client'
 
-import { type ReactNode, Suspense, useEffect } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { Flex, Text, Button, Card, Stack, Spinner } from '@/adapters/ui'
-import { useAppConfig } from '@/shared/context'
+/**
+ * CoralFil OS — Auth Error Page
+ * Shown when Cognito returns an unrecoverable authentication error.
+ */
 
-const errorMessages: Record<string, string> = {
-  Configuration: 'There is a problem with the server configuration.',
-  AccessDenied: 'You do not have permission to access this resource.',
-  Verification: 'The verification link has expired or has already been used.',
-  Default: 'An error occurred during authentication.',
+import { type ReactNode, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+
+const ERROR_DETAILS: Record<string, { title: string; desc: string }> = {
+  Configuration: {
+    title: 'Server Configuration Error',
+    desc:  'There is a problem with the server authentication configuration. Please contact your administrator.',
+  },
+  AccessDenied: {
+    title: 'Access Denied',
+    desc:  'You do not have permission to access CoralFil OS. If you believe this is an error, contact admin@coralfil.com.',
+  },
+  Verification: {
+    title: 'Link Expired',
+    desc:  'The sign-in link has expired or has already been used. Please request a new one.',
+  },
+  Default: {
+    title: 'Authentication Error',
+    desc:  'An unexpected error occurred during authentication. Please try again or contact support.',
+  },
 }
 
-/**
- * Error content that uses useSearchParams (requires Suspense wrapper)
- */
-const ErrorContent = (): ReactNode => {
-  const router = useRouter()
-  const { authRequired } = useAppConfig()
+function ErrorContent(): ReactNode {
   const searchParams = useSearchParams()
-  const error = searchParams?.get('error') || 'Default'
-  const errorMessage = errorMessages[error] || errorMessages.Default
-
-  // Redirect to home if auth is disabled - this page is not needed
-  useEffect(() => {
-    if (!authRequired) {
-      router.replace('/')
-    }
-  }, [authRequired, router])
-
-  // Show loading while redirecting
-  if (!authRequired) {
-    return (
-      <Flex align="center" justify="center" className="py-8">
-        <Spinner size="medium" aria-label="Redirecting..." />
-      </Flex>
-    )
-  }
-
-  const handleRetry = (): void => {
-    window.location.href = '/auth/signin'
-  }
-
-  const handleHome = (): void => {
-    window.location.href = '/'
-  }
+  const errorCode = searchParams?.get('error') ?? 'Default'
+  const { title, desc } = ERROR_DETAILS[errorCode] ?? ERROR_DETAILS.Default
 
   return (
-    <Stack gap="6" align="center">
-      <Flex direction="col" gap="2" align="center">
-        <Text kind="title/lg" className="text-feedback-danger">
-          Authentication Error
-        </Text>
-        <Text kind="body/regular/md" className="text-secondary text-center">
-          {errorMessage}
-        </Text>
-      </Flex>
+    <div className="space-y-6 text-center">
+      {/* Icon */}
+      <div className="flex justify-center">
+        <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+          <span className="text-3xl">⚠️</span>
+        </div>
+      </div>
 
-      <Flex gap="3">
-        <Button kind="primary" size="medium" onClick={handleRetry}>
-          Try Again
-        </Button>
-        <Button kind="secondary" size="medium" onClick={handleHome}>
-          Go Home
-        </Button>
-      </Flex>
-    </Stack>
-  )
-}
+      {/* Text */}
+      <div>
+        <h1 className="text-2xl font-black tracking-tighter text-white mb-2">{title}</h1>
+        <p className="text-sm text-white/50 leading-relaxed">{desc}</p>
+        {errorCode !== 'Default' && (
+          <p className="text-xs text-white/20 mt-3 font-mono">Error code: {errorCode}</p>
+        )}
+      </div>
 
-/**
- * Auth Error Page
- */
-const AuthErrorPage = (): ReactNode => {
-  return (
-    <Flex
-      direction="col"
-      align="center"
-      justify="center"
-      className="bg-surface-sunken min-h-screen p-8"
-    >
-      <Card className="w-full max-w-md">
-        <Suspense
-          fallback={
-            <Flex align="center" justify="center" className="py-8">
-              <Spinner size="medium" aria-label="Loading" />
-            </Flex>
-          }
+      {/* Actions */}
+      <div className="flex flex-col gap-3 pt-2">
+        <Link
+          href="/auth/signin"
+          className="w-full py-3 rounded-xl font-bold text-sm uppercase tracking-widest text-center
+            bg-gradient-to-r from-[#00D9C0] to-[#00B5A3] text-[#020c18]
+            hover:shadow-[0_0_30px_rgba(0,217,192,0.3)] transition-all"
         >
-          <ErrorContent />
-        </Suspense>
-      </Card>
-    </Flex>
+          Try Again
+        </Link>
+        <a
+          href="mailto:admin@coralfil.com"
+          className="w-full py-3 rounded-xl font-bold text-sm uppercase tracking-widest text-center
+            border border-white/10 text-white/60 hover:border-white/20 hover:text-white/80 transition-all"
+        >
+          Contact Support
+        </a>
+      </div>
+    </div>
   )
 }
 
-export default AuthErrorPage
+export default function AuthErrorPage(): ReactNode {
+  return (
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-6"
+      style={{ background: 'linear-gradient(to bottom, #020c18, #041830, #020c18)' }}
+    >
+      {/* Glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-red-500/5 blur-[120px] pointer-events-none" />
+
+      <div className="relative z-10 w-full max-w-sm">
+        {/* CoralFil wordmark */}
+        <div className="text-center mb-8">
+          <Link href="/auth/signin" className="inline-flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-lg bg-[#00D9C0] flex items-center justify-center">
+              <span className="text-lg">🧬</span>
+            </div>
+            <span className="font-black tracking-tighter text-white text-lg group-hover:text-[#00D9C0] transition-colors">
+              CoralFil OS
+            </span>
+          </Link>
+        </div>
+
+        {/* Card */}
+        <div
+          className="rounded-2xl border border-white/10 p-8 shadow-2xl"
+          style={{ background: 'rgba(4, 24, 48, 0.85)', backdropFilter: 'blur(20px)' }}
+        >
+          <Suspense fallback={<div className="h-48" />}>
+            <ErrorContent />
+          </Suspense>
+        </div>
+      </div>
+    </div>
+  )
+}

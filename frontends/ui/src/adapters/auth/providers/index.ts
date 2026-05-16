@@ -26,17 +26,16 @@
  */
 
 import type { AuthProviderConfig } from './types'
+import { cognitoProvider, refreshCognitoToken } from './cognito'
 
 export type { AuthProviderConfig, TokenRefreshResult } from './types'
 
 /**
  * Returns the active auth provider configuration.
- * Default: null provider (authentication disabled).
+ * Using AWS Cognito provider.
  */
 export const getAuthProviderConfig = (): AuthProviderConfig => ({
-  provider: null,
-  providerId: 'disabled-auth',
-  refreshToken: async () => {
-    throw new Error('No auth provider configured')
-  },
+  provider: cognitoProvider as any,
+  providerId: 'cognito',
+  refreshToken: refreshCognitoToken,
 })

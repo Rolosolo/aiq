@@ -20,6 +20,7 @@ import { AppConfigProvider, type AppConfig } from '@/shared/context'
 import { useLayoutStore } from '@/features/layout'
 import { useChatStore } from '@/features/chat/store'
 import type { ThemeMode } from '@/features/layout'
+import { BillingProvider } from '@/context/BillingContext'
 
 interface ProvidersProps {
   children: ReactNode
@@ -171,9 +172,11 @@ const DeepResearchRestorer = ({ children }: { children: ReactNode }): ReactNode 
 
 export const Providers = ({ children, config }: ProvidersProps): ReactNode => {
   const content = (
-    <ThemeWrapper>
-      <DeepResearchRestorer>{children}</DeepResearchRestorer>
-    </ThemeWrapper>
+    <BillingProvider>
+      <ThemeWrapper>
+        <DeepResearchRestorer>{children}</DeepResearchRestorer>
+      </ThemeWrapper>
+    </BillingProvider>
   )
 
   return (

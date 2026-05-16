@@ -27,7 +27,7 @@ const getBackendUrl = (): string => {
 const buildBackendUrl = (path: string[]): string => {
   const backendBase = getBackendUrl()
   const pathString = path.join('/')
-  return `${backendBase}/v1/${pathString}`
+  return `${backendBase}/api/v1/${pathString}`
 }
 
 const getAuthHeaders = async (req: NextRequest): Promise<Record<string, string>> => {
