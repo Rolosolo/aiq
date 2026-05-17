@@ -159,7 +159,7 @@ function SignInContent(): ReactNode {
         </div>
         <div className="flex items-center gap-3 text-xs text-white/40">
           <span className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">👤</span>
-          New users: contact <a href="mailto:admin@coralfil.com" className="text-[#00D9C0]/70 hover:text-[#00D9C0] underline underline-offset-2">admin@coralfil.com</a> to request access.
+          New users: Create a profile to access basic tools for free.
         </div>
         <div className="flex items-center gap-3 text-xs text-white/40">
           <span className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">🌐</span>
